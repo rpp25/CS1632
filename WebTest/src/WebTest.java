@@ -8,11 +8,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 /**
- * As a user,
- * I would like to see reddit links in all sorts of ways,
- * So that I can know what is happening in the world
  * @author rpp25
- *
+ * This program tests the sample website and checks if each requirement is met.
  */
 
 public class WebTest {
@@ -40,6 +37,8 @@ public class WebTest {
 		assertTrue(message2.contains("Used for CS1632 Software Quality Assurance, taught by Bill Laboon"));
 	}	
 
+	// Given that I am on the main page
+	// The page shall display links that read ""CS1632 D3 Home", "Factorial", "Fibonacci", "Hello", and "Cathedral Pics"
 	@Test
 	public void testHasCorrectHeaderLinks() {
 		// Check for the 5 links - if any of
@@ -62,10 +61,9 @@ public class WebTest {
 		
 		// find the "factorial" link and click on it
 		// The page you go to should include "factorial"
-		// in the title
+		// in a div header
 		driver.findElement(By.linkText("Factorial")).click();
 		String str = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2")).getText();
-		//System.out.println(str);
 		assertTrue(str.contains("factorial"));
 	}	
 	
@@ -77,10 +75,9 @@ public class WebTest {
 		
 		// find the "Fibonacci" link and click on it
 		// The page you go to should include "Fibonacci"
-		// in the title
+		// in a div header
 		driver.findElement(By.linkText("Fibonacci")).click();
 		String str = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2")).getText();
-		//System.out.println(str);
 		assertTrue(str.contains("Fibonacci"));
 	}	
 	
@@ -92,10 +89,9 @@ public class WebTest {
 		
 		// find the "Hello" link and click on it
 		// The page you go to should include "Hello"
-		// in the title
+		// in a div header
 		driver.findElement(By.linkText("Hello")).click();
 		String str = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2")).getText();
-		//System.out.println(str);
 		assertTrue(str.contains("Hello"));
 	}	
 
@@ -106,11 +102,9 @@ public class WebTest {
 	public void testCathyLink() {
 		
 		// find the "new" link and click on it
-		// The page you go to should include "factorial"
-		// in the title
+		// The page you go to should include 3 pictues of the Cathedral in a numbered list
 		driver.findElement(By.linkText("Cathedral Pics")).click();
 		String str = driver.findElement(By.xpath("//h2")).getText();
-		//System.out.println(str);
 		assertTrue(str.contains("Cathedral"));
 	}	
 		
@@ -120,12 +114,16 @@ public class WebTest {
 	// Then I should be redirected to a page that displays the factorial result
 	@Test
 	public void testFactWorks(){
+		
+		//start on the factorial page
+		//find the elements corresponding to the input box and submit button
+		//simulate the factorial calculator by entering in a test value
+		//The factorial of the value displayed in the message should be the equal to the calculated factorial
 		int test = 5;
 		long fact = factorial(test);
 		driver.get("https://cs1632ex.herokuapp.com/fact");
 		WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 		WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
-		//System.out.println(submitButton.getAttribute("value"));
 		input.sendKeys(Integer.toString(test));
 		submitButton.click();
 		//get results
@@ -139,8 +137,13 @@ public class WebTest {
 	// Then I should be redirected to a page that displays the Fibonacci result
 	@Test
 	public void testFibWorks(){
+		//start on the Fibonacci page
+		//find the elements corresponding to the input box and submit button
+		//simulate the Fibonacci calculator by entering in a test value
+		//The Fibonacci of the value displayed in the message should be the equal to the calculated Fibonacci value
+
 		int test = 5;
-		int fib = fibonacci(test+1);
+		int fib = fibonacci(test);
 		driver.get("https://cs1632ex.herokuapp.com/fib");
 		WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 		WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
@@ -149,20 +152,22 @@ public class WebTest {
 		//get results
 		WebElement output = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2"));
 		String result = output.getText();
-		assertTrue(result.contains(Long.toString(fib)));
+		assertTrue(result.contains("is " + Long.toString(fib) + "!"));
 	}
 
 	// Given that I am on the Factorial page
 	// When I submit a negative number into the form
-	// Then I should be redirected to a page that displays the factorial result as 1
+	// Then I should be redirected to a page that displays a message reporting a factorial of 1
 	@Test
 	public void testFactNegative(){
+		//start on the factorial page
+		//find the elements corresponding to the input box and submit button
+		//simulate the factorial calculator by entering in a negative number
+		//The factorial of the value displayed in the message should be 1
 		int test = -1;
-		//long fact = factorial(test);
 		driver.get("https://cs1632ex.herokuapp.com/fact");
 		WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 		WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
-		//System.out.println(submitButton.getAttribute("value"));
 		input.sendKeys(Integer.toString(test));
 		submitButton.click();
 		//get results
@@ -176,8 +181,12 @@ public class WebTest {
 	// Then I should be redirected to a page that displays the Fibonacci result as 1
 	@Test
 	public void testFibNegative(){
+		//start on the Fibonacci page
+		//find the elements corresponding to the input box and submit button
+		//simulate the Fibonacci calculator by entering in a negative number
+		//The Fibonacci of the value displayed in the message should be 1
+		
 		int test = -1;
-		//int fib = fibonacci(test+1);
 		driver.get("https://cs1632ex.herokuapp.com/fib");
 		WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 		WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
@@ -190,15 +199,19 @@ public class WebTest {
 	}
 	
 	// Given that I am on the Factorial page
-	// When I submit a letter into the form
+	// When I submit a letter or String into the form
 	// Then I should be redirected to a page that displays the factorial result as 1
 	@Test
 	public void testFactInvalid(){
 		try {
+			//start on the factorial page
+			//find the elements corresponding to the input box and submit button
+			//simulate the factorial calculator by entering in a letter or String
+			//The factorial of the value displayed in the message should be 1
+		
 			driver.get("https://cs1632ex.herokuapp.com/fact");
 			WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 			WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
-			//System.out.println(submitButton.getAttribute("value"));
 			input.sendKeys("f");
 			submitButton.click();
 			//get results
@@ -216,10 +229,14 @@ public class WebTest {
 	@Test
 	public void testFibInvalid(){
 		try {
+			//start on the Fibonacci page
+			//find the elements corresponding to the input box and submit button
+			//simulate the Fibonacci calculator by entering in a letter or String
+			//The Fibonacci of the value displayed in the message should be 1
+			
 			driver.get("https://cs1632ex.herokuapp.com/fact");
 			WebElement submitButton = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[2]"));
 			WebElement input = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/form/input[1]"));
-			//System.out.println(submitButton.getAttribute("value"));
 			input.sendKeys("f");
 			submitButton.click();
 			//get results
@@ -235,12 +252,10 @@ public class WebTest {
 	// The message on the page should read "Hello CS1632, from Prof. Laboon!"
 	@Test
 	public void testHelloWithoutTrail() {
-		
 		// start on the "Hello" page
-		driver.get("https://cs1632ex.herokuapp.com/hello");
 		// The message on the page hould include "Hello CS1632, from Prof. Laboon!
+		driver.get("https://cs1632ex.herokuapp.com/hello");
 		String str = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2")).getText();
-		//System.out.println(str);
 		assertTrue(str.contains("Hello CS1632, from Prof. Laboon!"));
 	}	
 	
@@ -249,18 +264,22 @@ public class WebTest {
 	@Test
 	public void testHelloWithTrail() {
 		String test = "the Batman";
-		test = test.replaceAll(" ", "%20");
-		// start on the "Hello" page
-		driver.get("https://cs1632ex.herokuapp.com/hello/"+test);
+		test = test.replaceAll(" ", "%20"); //account for spaces in the value
+		// start on the "Hello" page with a trailing value appended to the end
 		// The message on the page should include "Hello CS1632, from the Batman!"
+		driver.get("https://cs1632ex.herokuapp.com/hello/"+test);
 		String str = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/h2")).getText();
 		assertTrue(str.contains("Hello CS1632, from the Batman!"));
 	}	
 	
 	// Given that I am on the Cathedral Pics page
 	// The page should display three pictures of the cathedral
+	// Fails the test if 3 pictures are not found
 	@Test
 	public void testHasCathyPics() {
+		// Start on the Cathedral Pics page
+		// The page should have three pictures
+		// Each picture should have an alt containing the word "Cathedral"
 		driver.get("https://cs1632ex.herokuapp.com/cathy");
 		try {
 			String pic1 = driver.findElement(By.xpath("//div[contains(@class,'jumbotron')]/ol/li[1]/img")).getAttribute("alt");
@@ -274,6 +293,7 @@ public class WebTest {
 		}
 	}
 
+	//Calculates the Fibonacci value of a number
 	public int fibonacci(int n)  {
 	    if(n == 0){
 	        return 0;
@@ -286,6 +306,7 @@ public class WebTest {
 	    }
 	}
 	
+	//Calculates the factorial of a number
 	public long factorial(int n) {
 	      if (n <= 1){
 	    	  return 1;
