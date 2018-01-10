@@ -1,0 +1,51 @@
+Raj Patel
+CS 1501 Project 3
+
+Files:
+
+	- Car.java: class for Car
+		- This class contains all the information associated with a Car for the purposes of this project
+		- These fields include:
+			- A unique VIN number
+			- The car's make
+			- The car's model (e.g., Fiesta, Camry, Civic)
+			- The price to purchase (in dollars)
+			- The mileage of the car
+			- The color of the car
+		- setter methods
+			- If price and mileage are negative, they are set to 0 by default
+		- toString() method
+			-displays all the information about the Car
+
+	- CarTracker.java
+		- This class implements the menu-based driver UI for the terminal.
+		- Included are methods that carry out the following functions:
+			- Add a car
+			- Update a car
+			- Remove a specific car from consideration
+			- Retrieve the lowest price car
+			- Retrieve the lowest mileage car
+			- Retrieve the lowest price car by make and model
+			- Retrieve the lowest mileage car by make and model
+	- MyMinPQ.java
+		- This is the core class of the project. This implements 2 priority queues that store Car objects 
+		and 2 hashmaps that store their corresponding priority indexes
+		- Insert method
+			- inserts a Car into each priority Queue and hashmap
+			- Runs in O(1)
+		- Remove method
+			- Exchanges the car at the index the end of the queue with the specified car	
+			- Specified car is deleted, then the swapped car is sunk and swimmed to reposition it in the 			heap. I chose this specific method because it runs in O(1). It uses the hashmap to find the index
+			of the specified car in the appropriate priority queues. Removal from a hashmap is already O(1).
+
+		- 2 methods that get the lowest car by price and lowest car by mileage. These just return the car at the 	
+		first index of each queue. These are O(1)
+
+		- 2 methods that get either the car with lowest price or lowest mileage specifically by make and model
+			- These methods recursively search through each priority queue to find cars based on make and 			model. Each pair of cars (left child and right child) are compared, and whichever has the lower 				price/mileage is returned. I chose this approach because it's average case is O(log n); if the 
+			car is found in the left "branch" of the queue, the right is never explored further, thus 					eliminating other choices for the search. It's worst case is O(n), having to check every 			single index.
+
+		- 4 methods corresponding to sink and swim methods for both price and mileage
+		- getVIN(): This method searches the price hashmap for a specific car using its VIN, and returns it
+		- 3 update methods for updating price, mileage, and color. These method search either the price or mileage 		hashmaps, retrieves their respective indices for the priority queues, and changes their information as 				specified by the user.
+		- resize() function that doubles the priority queue sizes by using the Arrays class to create a copy of the 		current queue with a doubled size
